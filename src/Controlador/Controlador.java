@@ -143,7 +143,7 @@ public class Controlador implements ActionListener {
     }
 
     @Override
-    //metodo que genera el cambio de 
+    //metodo que genera el cambio de posicion de las piezas de ajedrez
     public void actionPerformed(ActionEvent ae) {
         System.out.println("Tocando botonnn");
         
@@ -160,7 +160,14 @@ public class Controlador implements ActionListener {
             } else if (posicionAntigua != null) {
                 posicionNueva = posicionActual;
                 if (movimientos.esPosibleEsteMovimiento(tablero, posicionAntigua, posicionNueva)){
+                    
+                    
+                    System.out.println("Posicion antigua:  "+posicionAntigua);
+                    System.out.println("Posicion posicionNueva:  "+posicionNueva);
+
                     cambiarFichas(posicionAntigua, posicionNueva);
+                    
+                    
                     posicionNueva = null;
                     posicionAntigua = null;
                     turnoMaquina();
@@ -192,7 +199,7 @@ public class Controlador implements ActionListener {
         
     }
     
-    //turno del boot
+    //turno del boot , genera y retorna los datos de areglo y movimientos detectados para seguir el juego
     private void turnoMaquina(){
             String[] movimientos = bot.movimientoBot(tablero);
             cambiarFichas(movimientos[0], movimientos[1]);
@@ -219,6 +226,9 @@ public class Controlador implements ActionListener {
     }
 
     private void cambiarEnPantalla(String posAntigua, String posNueva) {
+        
+        System.out.println("Actualizando detalle en pantalla");
+        
         boton(posNueva).setIcon(boton(posAntigua).getIcon());
         boton(posAntigua).setIcon(null);
     }

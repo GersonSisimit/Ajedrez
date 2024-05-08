@@ -39,9 +39,9 @@ public class Bot {
                             char ejeX = posicionFinal.charAt(1);
                             int intEjeY = Integer.parseInt(String.valueOf(ejeY));
                             int intEjeX = Integer.parseInt(String.valueOf(ejeX));
-                            System.out.println(ficha + " : " + posicionFinal);
+                            //System.out.println(ficha + " : " + posicionFinal);
                             int puntuacionPosicionEspecifica = punutacionMovimiento(i, j, intEjeY, intEjeX);
-                            System.out.println(puntuacionPosicionEspecifica);
+                            //System.out.println(puntuacionPosicionEspecifica);
                             if (puntuacionMaxima <= puntuacionPosicionEspecifica) {
                                 yInicial = i;
                                 xInicial = j;
@@ -69,7 +69,7 @@ public class Bot {
             posicionNueva = "34";
             primerMovimiento = false;
         }
-        System.out.println("Fin turno");
+        System.out.println("Fin turno de maquina");
 
         if (jaqueMate == true) {
             MateHaciaNegras ventana = new MateHaciaNegras(null, true);
