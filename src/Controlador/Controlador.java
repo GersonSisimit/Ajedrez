@@ -7,6 +7,10 @@ import Vista.VentanaEleccionFicha;
 import Vista.VistaTablero;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -143,6 +147,7 @@ public class Controlador implements ActionListener {
     }
 
     @Override
+    
     //metodo que genera el cambio de posicion de las piezas de ajedrez
     public void actionPerformed(ActionEvent ae) {
         //se pueden mover los elementos con el método cambiarFichas("60", "50");
@@ -151,6 +156,52 @@ public class Controlador implements ActionListener {
         //transformar un input de texto con instrucciones dada en notacion algebráica de ajedrez y transformarlo
         //indicar donde estaba y moverlo a otra posición
         //el contexto nos lo indica el array, indicando las dos posiciones se puede ubicar el nombre de la pieza en el array
+        
+        
+        String archivo = "C:\\Users\\DesarrolloWeb\\Documents\\entrada.txt"; // Ruta del archivo de texto
+
+        // Leer el archivo y almacenar las líneas en un ArrayList
+        ArrayList<String> lineas = leerArchivo(archivo);
+
+        // Almacenar los pares de palabras en un ArrayList de arrays de strings
+        ArrayList<String[]> paresDePalabras = new ArrayList<>();
+        for (String linea : lineas) {
+            String[] palabras = linea.split("\\s+"); // Separar las palabras por espacios en blanco
+            for (int i = 0; i < palabras.length; i += 2) {
+                // Verificar que hay al menos dos palabras en la línea
+                if (i + 1 < palabras.length) {
+                    String[] par = {palabras[i], palabras[i + 1]}; // Almacenar el par de palabras
+                    paresDePalabras.add(par);
+                }
+            }
+        }
+
+        // Imprimir los pares de palabras almacenados
+        for (String[] par : paresDePalabras) {
+            
+            if (movimientos.esPosibleEsteMovimiento(tablero, par[0], par[1])){
+                System.out.println("Moviendo pieza");
+                cambiarFichas(par[0], par[1]);
+                //turnoMaquina();
+            }
+            else{
+                System.out.println("No es posible el movimiento");
+            }
+            
+            //boton(par[1]).setIcon(boton(par[0]).getIcon());
+            //boton(par[0]).setIcon(null);
+            //cambiarFichas(par[0],par[1]);
+            
+            System.out.println("Instruccion:  [" + par[0] + ", " + par[1] + "]");
+            try {
+                Thread.sleep(2000); // Pausa de 1 segundo (1000 milisegundos)
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
+        
         
         if (turnoJugador == 'A') {
             posicionActual = getBotonPosicionString(ae.getSource());
@@ -171,7 +222,24 @@ public class Controlador implements ActionListener {
             }
         }
     }
+    // Método para leer un archivo de texto y almacenar sus líneas en un ArrayList
     
+    private static ArrayList<String> leerArchivo(String archivo) {
+        ArrayList<String> lineas = new ArrayList<>();
+        try {
+            FileReader fr = new FileReader(archivo);
+            BufferedReader br = new BufferedReader(fr);
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                lineas.add(linea);
+            }
+            br.close();
+            fr.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return lineas;
+    }
     private void comprobarJaqueMateHaciaBlancas(){
         boolean jaqueMate = true;
         for(int i = 0;i<8;i++){
