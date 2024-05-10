@@ -145,29 +145,24 @@ public class Controlador implements ActionListener {
     @Override
     //metodo que genera el cambio de posicion de las piezas de ajedrez
     public void actionPerformed(ActionEvent ae) {
-        System.out.println("Tocando botonnn");
-        
-        System.out.println(turnoJugador+" Turno");
+        //se pueden mover los elementos con el método cambiarFichas("60", "50");
+        //se pueden validar los movimientos con el método movimientos.esPosibleEsteMovimiento(tablero, "60", "50")
+        //se le pasa el array de datos y si es valido nos retorna un boleano     
+        //transformar un input de texto con instrucciones dada en notacion algebráica de ajedrez y transformarlo
+        //indicar donde estaba y moverlo a otra posición
+        //el contexto nos lo indica el array, indicando las dos posiciones se puede ubicar el nombre de la pieza en el array
         
         if (turnoJugador == 'A') {
             posicionActual = getBotonPosicionString(ae.getSource());
 
-            System.out.println(turnoJugador+" Turno");
-            System.out.println("Posicion actual:  "+posicionActual);
-            
             if (comprobarSiLaFichaEsBlanca(posicionActual)) {
                 posicionAntigua = posicionActual;
             } else if (posicionAntigua != null) {
                 posicionNueva = posicionActual;
                 if (movimientos.esPosibleEsteMovimiento(tablero, posicionAntigua, posicionNueva)){
-                    
-                    
-                    System.out.println("Posicion antigua:  "+posicionAntigua);
-                    System.out.println("Posicion posicionNueva:  "+posicionNueva);
 
                     cambiarFichas(posicionAntigua, posicionNueva);
-                    
-                    
+        
                     posicionNueva = null;
                     posicionAntigua = null;
                     turnoMaquina();
@@ -223,6 +218,7 @@ public class Controlador implements ActionListener {
                
         tablero[yN][xN] = tablero[yA][xA];
         tablero[yA][xA] = "";
+        System.out.println(tablero[yN][xN]);
     }
 
     private void cambiarEnPantalla(String posAntigua, String posNueva) {
